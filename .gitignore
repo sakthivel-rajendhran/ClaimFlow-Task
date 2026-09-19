@@ -1,0 +1,18 @@
+# ClaimFlow — gitignore
+node_modules/
+dist/
+.env
+*.env.local
+__pycache__/
+*.pyc
+*.pyo
+uploads/*
+!uploads/.gitkeep
+backend/uploads/*
+!backend/uploads/.gitkeep
+.venv/
+venv/
+*.egg-info/
+.DS_Store
+Thumbs.db
+*.log
