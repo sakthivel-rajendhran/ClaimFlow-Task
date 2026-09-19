@@ -169,9 +169,11 @@ p { color: var(--text-secondary); line-height: 1.7; }
    ============================================ */
 .container {
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(16px, 4vw, 32px);
+  padding-right: clamp(16px, 4vw, 32px);
 }
 
 .flex { display: flex; }
@@ -982,8 +984,9 @@ input[type="number"] {
 .landing-nav-actions { display: flex; align-items: center; gap: 10px; }
 
 .hero {
+  width: 100%;
   text-align: center;
-  padding: 100px 24px 80px;
+  padding: clamp(48px, 8vw, 96px) clamp(16px, 4vw, 32px) clamp(40px, 6vw, 72px);
   position: relative;
   overflow: hidden;
 }
@@ -998,15 +1001,16 @@ input[type="number"] {
   border-radius: var(--radius-full);
   font-size: 0.8rem;
   font-weight: 600;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   letter-spacing: 0.02em;
 }
 .hero h1 {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(2rem, 5.5vw + 0.5rem, 3.75rem);
   font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 20px;
+  line-height: 1.15;
+  margin-bottom: 18px;
   letter-spacing: -0.02em;
+  word-break: break-word;
 }
 .hero h1 .gradient-text {
   background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
@@ -1015,10 +1019,11 @@ input[type="number"] {
   background-clip: text;
 }
 .hero-desc {
-  font-size: 1.15rem;
+  font-size: clamp(0.95rem, 1.8vw + 0.4rem, 1.15rem);
   color: var(--muted);
-  max-width: 560px;
-  margin: 0 auto 36px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto clamp(20px, 4vw, 32px);
   line-height: 1.7;
 }
 .hero-actions {
@@ -1026,12 +1031,13 @@ input[type="number"] {
   align-items: center;
   justify-content: center;
   gap: 14px;
+  width: 100%;
   flex-wrap: wrap;
 }
 .hero-glow {
   position: absolute;
-  width: 600px;
-  height: 600px;
+  width: min(600px, 90vw);
+  height: min(600px, 90vw);
   background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
   top: 50%;
   left: 50%;
@@ -1066,14 +1072,14 @@ input[type="number"] {
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: clamp(16px, 3vw, 24px);
 }
 .feature-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
-  padding: 28px;
+  padding: clamp(20px, 4vw, 28px);
   transition: all var(--transition-base);
 }
 .feature-card:hover {
@@ -1094,10 +1100,22 @@ input[type="number"] {
 .feature-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
 .feature-card p { font-size: 0.875rem; line-height: 1.6; }
 
+.how-it-works-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(24px, 4vw, 48px);
+}
+@media (max-width: 768px) {
+  .how-it-works-wrapper {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
 .how-it-works {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: clamp(14px, 2.5vw, 24px);
   position: relative;
 }
 .step-card {
@@ -1642,8 +1660,48 @@ input[type="number"] {
   }
 }
 
+/* Fluid grid and layout helper classes */
+.dashboard-charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+@media (max-width: 840px) {
+  .dashboard-charts-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.form-page-container {
+  width: 100%;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.detail-page-container {
+  width: 100%;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 580px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE BREAKPOINTS (Fluid Multi-Device)
    ============================================ */
 @media (max-width: 1024px) {
   .sidebar { transform: translateX(-100%); }
@@ -1655,27 +1713,43 @@ input[type="number"] {
 }
 
 @media (max-width: 768px) {
-  .form-control { font-size: 16px; } /* Prevents mobile browser auto-zoom */
-  .page-content { padding: 16px; }
-  .stats-grid { grid-template-columns: 1fr 1fr; }
-  .auth-card { padding: 28px 20px; }
-  .hero { padding: 60px 16px 40px; }
-  .section { padding: 48px 16px; }
+  .form-control { font-size: 16px; } /* Prevents iOS auto-zoom on input focus */
+  .page-content { padding: clamp(14px, 3vw, 20px); }
+  .stats-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); }
+  .auth-card { padding: clamp(24px, 5vw, 32px) clamp(16px, 4vw, 24px); }
+  .hero { padding: clamp(48px, 8vw, 72px) clamp(16px, 4vw, 24px) 36px; }
+  .section { padding: clamp(40px, 7vw, 64px) clamp(14px, 3vw, 24px); }
   .landing-nav-links { display: none; }
+  .landing-desktop-cta { display: none !important; }
   .footer-grid { grid-template-columns: 1fr; gap: 24px; }
   .footer-bottom { flex-direction: column; gap: 8px; }
   .modal { max-width: 100%; margin: 0; border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
   .modal-backdrop { align-items: flex-end; padding: 0; }
-  .hero-actions { flex-direction: column; }
+  .hero-actions {
+    flex-direction: column;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .hero-actions .btn {
+    width: 100%;
+  }
   .filters-bar { gap: 8px; }
   .filter-tabs { overflow-x: auto; }
 }
 
 @media (max-width: 480px) {
-  .auth-page { padding: 16px; }
+  .auth-page { padding: 14px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-card { padding: 14px; }
+  .stat-value { font-size: 1.35rem; }
+  .toast-container { right: 10px; left: 10px; bottom: 10px; }
+  .toast { min-width: unset; width: 100%; }
+  .app-header { padding: 0 clamp(12px, 3vw, 18px); }
+}
+
+@media (max-width: 360px) {
   .stats-grid { grid-template-columns: 1fr; }
-  .toast-container { right: 12px; left: 12px; bottom: 12px; }
-  .toast { min-width: unset; }
-  .app-header { padding: 0 14px; }
-  .auth-card { padding: 24px 16px; }
+  .hero h1 { font-size: 1.75rem; }
+  .hero-badge { font-size: 0.72rem; padding: 4px 10px; }
+  .header-title { font-size: 0.9rem; }
 }

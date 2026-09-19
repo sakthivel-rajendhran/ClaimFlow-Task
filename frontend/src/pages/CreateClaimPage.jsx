@@ -106,7 +106,7 @@ export default function CreateClaimPage() {
   return (
     <AppLayout title="New Claim">
       <SEO title="New Expense Claim" noIndex />
-      <div style={{ maxWidth: 700, margin: '0 auto' }}>
+      <div className="form-page-container">
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
           <button className="btn btn-ghost btn-icon" onClick={() => navigate(-1)} aria-label="Go back">
             <ArrowLeft size={18} />
@@ -125,7 +125,7 @@ export default function CreateClaimPage() {
                 <h3 className="card-title">Claim Details</h3>
               </div>
               <div className="card-body" style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="form-row">
                   {/* Claimant / Employee Information */}
                   <div className="form-group" style={{ gridColumn: '1 / -1' }}>
                     <label className="form-label" htmlFor="employee_name" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>

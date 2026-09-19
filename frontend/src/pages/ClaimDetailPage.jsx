@@ -69,7 +69,7 @@ export default function ClaimDetailPage() {
   return (
     <AppLayout title="Claim Details">
       <SEO title={`Claim ${truncateId(id)}`} noIndex />
-      <div style={{ maxWidth: 900, margin: '0 auto' }}>
+      <div className="detail-page-container">
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
           <button className="btn btn-ghost btn-icon" onClick={() => navigate(-1)} aria-label="Go back">

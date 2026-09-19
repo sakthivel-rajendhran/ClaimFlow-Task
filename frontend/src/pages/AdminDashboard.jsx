@@ -91,11 +91,11 @@ export default function AdminDashboard() {
         </div>
 
         {/* Stats */}
-        <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))' }}>
+        <div className="stats-grid">
           {statCards.map(s => <StatCard key={s.label} {...s} />)}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 24 }}>
+        <div className="dashboard-charts-grid">
           {/* Category breakdown */}
           <div className="card">
             <div className="card-header">

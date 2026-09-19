@@ -126,11 +126,10 @@ export default function LandingPage() {
             >
               {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
-            <Link to="/login" className="btn btn-secondary btn-sm">Sign In</Link>
-            <Link to="/register" className="btn btn-primary btn-sm">Get Started</Link>
+            <Link to="/login" className="btn btn-secondary btn-sm landing-desktop-cta">Sign In</Link>
+            <Link to="/register" className="btn btn-primary btn-sm landing-desktop-cta">Get Started</Link>
             <button
               className="hamburger-btn"
-              style={{ display: 'flex' }}
               onClick={() => setMobileNavOpen(o => !o)}
               aria-label={mobileNavOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileNavOpen}
@@ -256,7 +255,7 @@ export default function LandingPage() {
               <h2 id="how-heading">How ClaimFlow Works</h2>
               <p className="section-desc">A simple, end-to-end expense claim workflow built for modern teams.</p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48 }}>
+            <div className="how-it-works-wrapper">
               <div>
                 <h3 style={{ marginBottom: 20, color: 'var(--primary)' }}>For Employees</h3>
                 <div className="how-it-works">
