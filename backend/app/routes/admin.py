@@ -185,6 +185,7 @@ async def update_claim_status(
     return ClaimResponse.from_mongo(updated_claim, user_doc)
 
 
+@router.get("/employees")
 @router.get("/users")
 async def list_employees(
     search: Optional[str] = Query(None),
@@ -219,4 +220,31 @@ async def list_employees(
         "page": page,
         "per_page": per_page,
         "pages": max(1, (total + per_page - 1) // per_page),
+    }
+
+
+@router.get("/employees/{employee_id}")
+async def get_employee_details(
+    employee_id: str,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
+    try:
+        oid = ObjectId(employee_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid employee ID")
+
+    user = db.users.find_one({"_id": oid, "role": "EMPLOYEE"})
+    if not user:
+        raise HTTPException(status_code=404, detail="Employee not found")
+
+    claims = list(db.claims.find({"user_id": oid}).sort([("submission_date", -1)]))
+    claim_responses = [ClaimResponse.from_mongo(c, user) for c in claims]
+
+    return {
+        "employee": UserResponse.from_mongo(user),
+        "claims": claim_responses,
+        "total_claims": len(claims),
+        "total_claimed_amount": sum(c.get("total_amount", 0) for c in claims),
+        "approved_amount": sum(c.get("total_amount", 0) for c in claims if c.get("status") in ["APPROVED", "PROCESSED"]),
     }
