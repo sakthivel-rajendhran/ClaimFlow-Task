@@ -19,7 +19,6 @@ export default function CreateClaimPage() {
   const { user } = useAuth()
   const { success, error } = useToast()
   const [form, setForm] = useState({
-    merchant_name: '',
     amount: '',
     category: '',
     expense_date: '',
@@ -72,7 +71,6 @@ export default function CreateClaimPage() {
 
   const validate = () => {
     const e = {}
-    if (!form.merchant_name.trim()) e.merchant_name = 'Merchant name is required'
     if (!form.amount) e.amount = 'Amount is required'
     else if (isNaN(form.amount) || Number(form.amount) <= 0) e.amount = 'Enter a valid positive amount'
     if (!form.category) e.category = 'Please select a category'
@@ -89,7 +87,6 @@ export default function CreateClaimPage() {
     setLoading(true)
     try {
       const fd = new FormData()
-      fd.append('merchant_name', form.merchant_name.trim())
       fd.append('amount', form.amount)
       fd.append('category', form.category)
       fd.append('expense_date', form.expense_date)
@@ -146,25 +143,6 @@ export default function CreateClaimPage() {
                     <span style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: 4, display: 'block' }}>
                       Automatically submitted under your authenticated employee account.
                     </span>
-                  </div>
-
-                  {/* Merchant / Vendor Information */}
-                  <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                    <label className="form-label" htmlFor="merchant_name">
-                      Merchant / Vendor Name <span className="required" aria-hidden="true">*</span>
-                    </label>
-                    <input
-                      id="merchant_name" type="text"
-                      className={`form-control${errors.merchant_name ? ' error' : ''}`}
-                      placeholder="e.g. ABC Restaurant, IndiGo Airlines, Amazon, Staples"
-                      value={form.merchant_name}
-                      onChange={(e) => set('merchant_name', e.target.value)}
-                      aria-invalid={!!errors.merchant_name}
-                    />
-                    <span style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: 4, display: 'block' }}>
-                      The vendor or business where the expense was incurred (distinct from employee).
-                    </span>
-                    {errors.merchant_name && <span className="form-error" role="alert">{errors.merchant_name}</span>}
                   </div>
 
                   <div className="form-group">

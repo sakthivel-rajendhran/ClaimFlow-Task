@@ -15,23 +15,23 @@ VALID_SORT = {"newest", "oldest", "highest", "lowest"}
 
 @router.post("", response_model=ClaimResponse, status_code=status.HTTP_201_CREATED)
 async def create_claim(
-    merchant_name: str = Form(...),
     amount: float = Form(...),
     category: str = Form(...),
     expense_date: str = Form(...),
     receipt: UploadFile = File(...),
+    merchant_name: Optional[str] = Form(None),
     current_user=Depends(require_employee),
     db=Depends(get_db),
 ):
     # Validate fields
-    if not merchant_name.strip():
-        raise HTTPException(status_code=400, detail="Merchant name is required")
     if amount <= 0:
         raise HTTPException(status_code=400, detail="Amount must be greater than 0")
     if category not in VALID_CATEGORIES:
         raise HTTPException(status_code=400, detail=f"Invalid category")
     if not expense_date:
         raise HTTPException(status_code=400, detail="Expense date is required")
+
+    resolved_merchant = merchant_name.strip() if (merchant_name and merchant_name.strip()) else category
 
     # Validate and save file
     file_info = validate_and_save_file(receipt)
@@ -50,7 +50,7 @@ async def create_claim(
         "reviewed_at": None,
         "receipt": {
             "image_url": file_info["image_url"],
-            "merchant_name": merchant_name.strip(),
+            "merchant_name": resolved_merchant,
             "expense_date": expense_date,
             "category": category,
             "original_filename": file_info["original_filename"],
